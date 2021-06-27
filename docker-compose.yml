@@ -30,6 +30,30 @@ services:
     networks:
       - internal
 
+  greeterReplica:
+    build:
+      context: .
+    image: moleculer-demo
+    env_file: docker-compose.env
+    environment:
+      SERVICES: greeter
+    depends_on:
+      - nats
+    networks:
+      - internal
+
+  helper:
+    build:
+      context: .
+    image: moleculer-demo
+    env_file: docker-compose.env
+    environment:
+      SERVICES: helper
+    depends_on:
+      - nats
+    networks:
+      - internal
+
   products:
     build:
       context: .
@@ -65,6 +89,10 @@ services:
     volumes:
       - freeswitch-sounds:/usr/share/freeswitch/sounds
       - /etc/freeswitch/:/etc/freeswitch
+    depends_on:
+      - nats
+    networks:
+      - internal
 
   nats:
     image: nats:2

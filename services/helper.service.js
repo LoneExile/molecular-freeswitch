@@ -1,3 +1,5 @@
+const esl = require("modesl");
+
 module.exports = {
 	name: "helper",
 	// load services/helper.service.js
@@ -5,7 +7,6 @@ module.exports = {
 	actions: {
 		random() {
 			return Math.round(Math.random() * 10);
-			// this.logger.info("random");
 		},
 	},
 
