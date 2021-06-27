@@ -10,9 +10,7 @@ module.exports = {
 	/**
 	 * Settings
 	 */
-	settings: {
-
-	},
+	settings: {},
 
 	/**
 	 * Dependencies
@@ -23,7 +21,6 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-
 		/**
 		 * Say a 'Hello' action.
 		 *
@@ -32,11 +29,15 @@ module.exports = {
 		hello: {
 			rest: {
 				method: "GET",
-				path: "/hello"
+				path: "/hello",
 			},
-			async handler() {
-				return "Hello Moleculer";
-			}
+			async handler(ctx) {
+				const payload = `Hello from greeting@${this.broker.nodeID}`;
+				const number = await ctx.call("helper.random");
+				ctx.emit("hello.called", { payload, number });
+				// return "Hello Moleculer";
+				return { payload, number };
+			},
 		},
 
 		/**
@@ -47,47 +48,37 @@ module.exports = {
 		welcome: {
 			rest: "/welcome",
 			params: {
-				name: "string"
+				name: "string",
 			},
 			/** @param {Context} ctx  */
 			async handler(ctx) {
 				return `Welcome, ${ctx.params.name}`;
-			}
-		}
+			},
+		},
 	},
 
 	/**
 	 * Events
 	 */
-	events: {
-
-	},
+	events: {},
 
 	/**
 	 * Methods
 	 */
-	methods: {
-
-	},
+	methods: {},
 
 	/**
 	 * Service created lifecycle event handler
 	 */
-	created() {
-
-	},
+	created() {},
 
 	/**
 	 * Service started lifecycle event handler
 	 */
-	async started() {
-
-	},
+	async started() {},
 
 	/**
 	 * Service stopped lifecycle event handler
 	 */
-	async stopped() {
-
-	}
+	async stopped() {},
 };
