@@ -1,7 +1,6 @@
 version: "3.3"
 
 services:
-
   api:
     build:
       context: .
@@ -51,6 +50,22 @@ services:
     networks:
       - internal
 
+  fs:
+    # build: .
+    # network_mode: 'host'
+    image: safarov/freeswitch
+    ports:
+      - "5060:5060"
+      - "5060:5060/udp"
+      # - '8021:8021'
+      - "8021:8021/tcp"
+    environment:
+      - SOUND_RATES=8000:16000
+      - SOUND_TYPES=music:en-us-callie
+    volumes:
+      - freeswitch-sounds:/usr/share/freeswitch/sounds
+      - /etc/freeswitch/:/etc/freeswitch
+
   nats:
     image: nats:2
     networks:
@@ -76,3 +91,4 @@ networks:
 
 volumes:
   data:
+  freeswitch-sounds:
